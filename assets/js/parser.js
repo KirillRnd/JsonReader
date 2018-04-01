@@ -1,8 +1,7 @@
 isArray = function(a) {
     return (!!a) && (a.constructor === Array);
 };
-
-var deeptheme = {theme: "РЈРєР°Р¶РёС‚Рµ Р—РґР°РЅРёСЏ", flag:false, themes:["question"]}
+var deeptheme = {theme: "Укажите Здания", flag:false, themes:["question"]}
 
 function onedeepview(obj, dpflag, dict) {
 	var array_count = 0;
@@ -56,7 +55,6 @@ function onedeepview(obj, dpflag, dict) {
 	} 
 	
 }
-var deeptheme = {theme: "РЈРєР°Р¶РёС‚Рµ Р—РґР°РЅРёСЏ", themes:["question"]}
 function deepview(sourse_array) {
 		// sourse_array is array
 	if (!isArray(sourse_array)) {

@@ -6,7 +6,7 @@
 
   <title>The HTML5 Herald</title>
   <meta name="description" content="The HTML5 Herald">
-<link href="viewer.css" rel="stylesheet">
+<link href="assets/css/viewer.css" rel="stylesheet">
 
   <!--[if lt IE 9]>
  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -14,11 +14,15 @@
 </head>
 
 <body>
-	<script src="jquery.js"></script>
-  <script src="steal.js"></script>
+	<script src="assets/js/jquery.js"></script>
+	
+  <script src="assets/js/parser.js"></script>
+  <script src="assets/js/steal.js"></script>
   
+  <script src="assets/js/load.js"></script>
   <textarea id="json_vl" wrap="hard" placeholder="Copy JSON here and press the run button [ > ]"></textarea>
   
+  <div id="wrapper"></div>
   <button id="target">
   Долбаный тест
   </button>
