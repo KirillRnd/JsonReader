@@ -1,6 +1,17 @@
 {
     "RECORDS": [
-        
+        {
+            "user_lastname": "1",
+            "user_firstname": "1",
+            "user_secondname": "1",
+            "user_phone": "1",
+            "user_email": "antieuge.ne@gmail.com",
+            "company_shortname": "\"Народные художественные промыслы \"Беломорские узоры\"",
+            "company_inn": "2926005151",
+            "state": "new",
+            "save": "0",
+            "answer_value": ""
+        },
         {
             "user_lastname": "БЕЛОВА",
             "user_firstname": "НАТАЛЬЯ",
