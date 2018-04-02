@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "grunt": "^1.0.2",
-    "grunt-contrib-jshint": "^1.1.0"
+    "grunt-contrib-jshint": "^1.1.0",
+    "jshint-stylish": "^2.2.1"
   }
 }

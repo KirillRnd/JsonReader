@@ -1,0 +1,7 @@
+.panel-wrapper>div{
+	overflow-y: scroll;
+    height: 600px;
+}
+body{
+	overflow: hidden;
+}
