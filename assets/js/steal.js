@@ -1,4 +1,6 @@
 
+var sourse_array=[];
+
 jQuery(function(a) {
    
 });
@@ -40,6 +42,7 @@ function loadfromURL(a) {
 function getJsonVar() {
     try {
         var a = $.parseJSON($("#json_vl").val());
+		sourse_array = a;
         $("#json_vl").val(JSON.stringify(a, void 0, 2));
         return a
     } catch (e) {
@@ -48,16 +51,16 @@ function getJsonVar() {
         {}
     }
 }
-function CreateLinkToArr(a) {
+function CreateLinkToArr(e) {
 	var li = document.createElement("button");
-	li.innerHTML= "<button onclick='return Convert2Table(this);'>OK<span style='display:none'>"+JSON.stringify(a)+"</span></button>";
+	
+	li.innerHTML= "<button onclick='return Convert2Table(\""+e+"\");'>OK</button>";
 	return li;
 }
 function Convert2Table(e)
 {
-	var JSONcontent = $(e).find("span").html();
-	var TableJson = deepview($.parseJSON(JSONcontent));
-	console.log(TableJson);
+	deeptheme = {theme: e, flag:false, themes:[]};
+	console.log(deepview(sourse_array));
 }
 
 function buildTable(a) {
@@ -68,7 +71,7 @@ function buildTable(a) {
         "object" != typeof a[c] || isArray(a[c]) ? "object" == typeof a[c] && isArray(a[c]) ? (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.colSpan = 2,
-        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+$(CreateLinkToArr(a[c]), !1).html()+'<table style="width:100%">' + $(buildArray(a[c]), !1).html() + "</table>") : (d = e.insertRow(-1),
+        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+$(CreateLinkToArr(c), !1).html()+'<table style="width:100%">' + $(buildArray(a[c]), !1).html() + "</table>") : (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.innerHTML = "<div class='td_head'>" + encodeText(c) + "</div>",
         d = d.insertCell(-1),
@@ -101,7 +104,7 @@ function buildArray(a) {
                 h += 1,
                 b = d.insertCell(h),
                 m[l] = h,
-                b.innerHTML = "<div class='td_head'>" + encodeText(k) + "</div>");
+                b.innerHTML = "<div class='td_head'>" + encodeText(k) +$(CreateLinkToArr(k), !1).html()+ "</div>");
     c || e.deleteRow(0);
     n = h + 1;
     for (f = 0; f < a.length; f++)
