@@ -5,10 +5,10 @@ jQuery(function(a) {
    
 });
 $(document).ready(function() {
-  $( "#target" ).click(function() {
+ /* $( "#target" ).click(function() {
 	//alert( "Handler for .click() called." );
 	$("#inner_tbl").html(buildTable(getJsonVar()));
-	});
+	});*/
 });
 
 var g;

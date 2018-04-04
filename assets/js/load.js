@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
   $.getJSON("http://jsonread.my/main_source.json", function(json) {
 		
@@ -20,11 +21,29 @@ $(document).ready(function() {
 
 			} catch (err) {
 			  console.log('Cant parse JSON at tabl '+i);
-			  res = [];
+			  res = {};
 
 			}
+			var elem = res;
+			elem = Object.create(res, {
+			  name: {
+				value: json.RECORDS[i].company_shortname,
+				writable: true,
+				enumerable: true,
+				configurable: true
+			  }
+			});
+			/*Object.defineProperty(elem, 'name', {
+			  value: json.RECORDS[i].company_shortname,
+			  writable: true,
+			  enumerable: true,
+			  configurable: true
+			});*/
+			sourse_array[sourse_array.length]=elem;
 			
-			$("#inner_tbl_"+i).html(buildTable(res));
+			if (i == 0) { 
+				$("#inner_tbl_"+i).html(buildTable(res));
+			}
 		}
 		
 			 $('#slider-id').liquidSlider({
@@ -38,6 +57,23 @@ $(document).ready(function() {
 				$('.slider-6-panel').each(function() {
 				  $(this).removeClass('animated ' + self.options.animateIn);
 				});
+			  },
+			  pretransition: function() {
+				var n = this.nextPanel;
+				var sourse=sourse_array[n];
+				var res = {};
+				for (var key in sourse) {
+				  if (key != "name")
+				  {
+					  res[key] = sourse[key];
+				  }
+				}
+				if ($("#inner_tbl_"+n).html() == "")
+				{
+					$("#inner_tbl_"+n).html(buildTable(res));
+				}
+				//console.log(this.nextPanel);
+				this.transition();
 			  }
 			 });
 		
