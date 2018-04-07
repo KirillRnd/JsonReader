@@ -60,7 +60,9 @@ function CreateLinkToArr(e) {
 function Convert2Table(e)
 {
 	deeptheme = {theme: e, flag:false, themes:[]};
-	console.log(deepview(sourse_array));
+	
+	var json = deepview(sourse_array);
+	createXLSXsheet(json,e);
 }
 
 function buildTable(a) {
@@ -104,7 +106,7 @@ function buildArray(a) {
                 h += 1,
                 b = d.insertCell(h),
                 m[l] = h,
-                b.innerHTML = "<div class='td_head'>" + encodeText(k) +$(CreateLinkToArr(k), !1).html()+ "</div>");
+                b.innerHTML = "<div class='td_head'>" + encodeText(k) + "</div>");//+$(CreateLinkToArr(k), !1).html()+
     c || e.deleteRow(0);
     n = h + 1;
     for (f = 0; f < a.length; f++)
