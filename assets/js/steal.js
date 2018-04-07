@@ -54,7 +54,7 @@ function getJsonVar() {
 function CreateLinkToArr(e) {
 	var li = document.createElement("button");
 	
-	li.innerHTML= "<button onclick='return Convert2Table(\""+e+"\");'>OK</button>";
+	li.innerHTML= "<button onclick='return Convert2Table(\""+e+"\");'>&#8659;</button>";
 	return li;
 }
 function Convert2Table(e)

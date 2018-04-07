@@ -1,5 +1,9 @@
 
 $(document).ready(function() {
+	////
+	////$('.liquid-slider').css('height',$('body').height()-35+'px');	
+	////
+	
   $.getJSON("http://jsonread.my/main_source.json", function(json) {
 		
 		for (var i = 0; i < json.RECORDS.length; i++)
