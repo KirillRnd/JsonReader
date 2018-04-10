@@ -51,15 +51,15 @@ function getJsonVar() {
         {}
     }
 }
-function CreateLinkToArr(e) {
+function CreateLinkToArr(e,path) {
 	var li = document.createElement("button");
 	
-	li.innerHTML= "<button onclick='return Convert2Table(\""+e+"\");'>&#8659;</button>";
+	li.innerHTML= "<button onclick='return Convert2Table(\""+e+"\","+JSON.stringify(path)+");'>&#8659;</button>";
 	return li;
 }
-function Convert2Table(e)
+function Convert2Table(e,path)
 {
-	deeptheme = {theme: e, flag:false, themes:[]};
+	deeptheme = {theme: e, flag:false, themes:path};
 	
 	var json = deepview(sourse_array);
 	createXLSXsheet(json,e);
@@ -67,13 +67,14 @@ function Convert2Table(e)
 
 function buildTable(a) {
     var e = document.createElement("table"), d, b;
+	var path = [];
     if (isArray(a))
         return buildArray(a);
     for (var c in a)
         "object" != typeof a[c] || isArray(a[c]) ? "object" == typeof a[c] && isArray(a[c]) ? (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.colSpan = 2,
-        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+$(CreateLinkToArr(c), !1).html()+'<table style="width:100%">' + $(buildArray(a[c]), !1).html() + "</table>") : (d = e.insertRow(-1),
+        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+$(CreateLinkToArr(c), !1).html()+'<table style="width:100%">' + $(buildArray(a[c],path.concat(c)), !1).html() + "</table>") : (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.innerHTML = "<div class='td_head'>" + encodeText(c) + "</div>",
         d = d.insertCell(-1),
@@ -83,7 +84,7 @@ function buildTable(a) {
         b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div><table style="width:100%">' + $(buildTable(a[c]), !1).html() + "</table>");
     return e
 }
-function buildArray(a) {
+function buildArray(a,path) {
     var e = document.createElement("table"), d, b, c = !1, p = !1, m = {}, h = -1, n = 0, l;
     l = "";
     if (0 == a.length)
@@ -93,7 +94,7 @@ function buildArray(a) {
         if ("object" != typeof a[f] || isArray(a[f]))
             "object" == typeof a[f] && isArray(a[f]) ? (b = d.insertCell(h),
             b.colSpan = 2,
-            b.innerHTML = '<div class="td_head"></div><table style="width:100%">' + $(buildArray(a[f]), !1).html() + "</table>",
+            b.innerHTML = '<div class="td_head"></div><table style="width:100%">' + $(buildArray(a[f],path), !1).html() + "</table>",
             c = !0) : p || (h += 1,
             p = !0,
             b = d.insertCell(h),
@@ -106,7 +107,7 @@ function buildArray(a) {
                 h += 1,
                 b = d.insertCell(h),
                 m[l] = h,
-                b.innerHTML = "<div class='td_head'>" + encodeText(k) + "</div>");//+$(CreateLinkToArr(k), !1).html()+
+                b.innerHTML = "<div class='td_head'>" + encodeText(k) +  (isArray(a[f][k]) ? $(CreateLinkToArr(k,path), !1).html() : "") + "</div>");//
     c || e.deleteRow(0);
     n = h + 1;
     for (f = 0; f < a.length; f++)
@@ -118,7 +119,7 @@ function buildArray(a) {
                 c = 0; c < n; c++)
                     b = d.insertCell(c),
                     b.className = td_class,
-                    l = c == h ? '<table style="width:100%">' + $(buildArray(a[f]), !1).html() + "</table>" : " ",
+                    l = c == h ? '<table style="width:100%">' + $(buildArray(a[f],path), !1).html() + "</table>" : " ",
                     b.innerHTML = "<div class='" + td_class + "'>" + encodeText(l) + "</div>";
             else
                 for (h = m.empty,
@@ -138,7 +139,7 @@ function buildArray(a) {
                 h = m[l],
                 b = d.cells[h],
                 b.className = td_class,
-                "object" != typeof c[k] || isArray(c[k]) ? "object" == typeof c[k] && isArray(c[k]) ? b.innerHTML = '<table style="width:100%">' + $(buildArray(c[k]), !1).html() + "</table>" : b.innerHTML = "<div class='" + td_class + "'>" + encodeText(c[k]) + "</div>" : b.innerHTML = '<table style="width:100%">' + $(buildTable(c[k]), !1).html() + "</table>"
+                "object" != typeof c[k] || isArray(c[k]) ? "object" == typeof c[k] && isArray(c[k]) ? b.innerHTML = '<table style="width:100%">' + $(buildArray(c[k],path.concat(k)), !1).html() + "</table>" : b.innerHTML = "<div class='" + td_class + "'>" + encodeText(c[k]) + "</div>" : b.innerHTML = '<table style="width:100%">' + $(buildTable(c[k]), !1).html() + "</table>"
         }
     return e
 }
