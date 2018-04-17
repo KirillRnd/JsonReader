@@ -30,24 +30,32 @@
 </head>
 
 <body>
+	<button id="ButtonForFile" onclick="ShowFileChoose();">Скрыть</button>
+	<form id="jsonFile" name="jsonFile" enctype="multipart/form-data" method="post">
 
+	  <fieldset>
+		<h2>Json File</h2>
+		 <input type='file' id='fileinput'>
+		 <input type='button' id='btnLoad' value='Load' onclick='loadFile();'>
+	  </fieldset>
+	</form>
   
-  <div class="liquid-slider" id="slider-id">
-	  
-  </div>
  
-<form id="jsonFile" name="jsonFile" enctype="multipart/form-data" method="post">
 
-  <fieldset>
-    <h2>Json File</h2>
-     <input type='file' id='fileinput'>
-     <input type='button' id='btnLoad' value='Load' onclick='loadFile();'>
-  </fieldset>
-</form>
 
 
 <script type="text/javascript">
 
+  function ShowFileChoose(){
+	  if ($("#jsonFile").css( "display" ) == "none"){
+			$("#jsonFile").slideDown();
+		    $("#ButtonForFile").html("Скрыть");
+	  }
+	  else {
+			$("#jsonFile").slideUp();
+			$("#ButtonForFile").html("Выбрать файл");
+	  }
+  }
   function loadFile() {
     var input, file, fr;
 
@@ -75,13 +83,24 @@
 
     function receivedText(e) {
       lines = e.target.result;
+	    try {
+			$("#slider-id-wrapper").remove();
+		}
+		catch(err) {
+			
+		}
+		$('<div>', {
+			class: 'liquid-slider',
+			id: 'slider-id'
+		})
+		.appendTo('body');
+		sourse_array=[];
       CreateTableFromJson($.parseJSON(lines));
+	  $("#jsonFile").slideUp();
+	  $("#ButtonForFile").html("Выбрать файл");
     }
   }
 </script>
 
 </body>
-<script>
-	/*CreateTableFromJson("http://jsonread.my/main_source.json");*/
-</script>
 </html>

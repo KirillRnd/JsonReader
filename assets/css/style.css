@@ -5,3 +5,6 @@
 body{
 	overflow: hidden;
 }
+#ButtonForFile {
+    width: 150px;
+   }

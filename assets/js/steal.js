@@ -74,7 +74,7 @@ function buildTable(a) {
         "object" != typeof a[c] || isArray(a[c]) ? "object" == typeof a[c] && isArray(a[c]) ? (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.colSpan = 2,
-        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+$(CreateLinkToArr(c), !1).html()+'<table style="width:100%">' + $(buildArray(a[c],path.concat(c)), !1).html() + "</table>") : (d = e.insertRow(-1),
+        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+$(CreateLinkToArr(c,path.concat(c)), !1).html()+'<table style="width:100%">' + $(buildArray(a[c],path.concat(c)), !1).html() + "</table>") : (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.innerHTML = "<div class='td_head'>" + encodeText(c) + "</div>",
         d = d.insertCell(-1),
