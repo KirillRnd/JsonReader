@@ -1,4 +1,64 @@
 
+  function ShowFileChoose(){
+	  if ($("#jsonFile").css( "display" ) == "none"){
+			$("#jsonFile").slideDown();
+		    $("#ButtonForFile").html("Скрыть");
+	  }
+	  else {
+			$("#jsonFile").slideUp();
+			$("#ButtonForFile").html("Выбрать файл");
+	  }
+  }
+  function loadFile() {
+	  
+	var high = getHeightOfBrowser();
+	changeCss(".panel-wrapper>div","height: "+high+"px;");
+	
+    var input, file, fr;
+
+    if (typeof window.FileReader !== 'function') {
+      alert("The file API isn't supported on this browser yet.");
+      return;
+    }
+
+    input = document.getElementById('fileinput');
+    if (!input) {
+      alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!input.files) {
+      alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+      alert("Please select a file before clicking 'Load'");
+    }
+    else {
+      file = input.files[0];
+      fr = new FileReader();
+      fr.onload = receivedText;
+      fr.readAsText(file);
+    }
+
+	
+    function receivedText(e) {
+      lines = e.target.result;
+	    try {
+			$("#slider-id-wrapper").remove();
+		}
+		catch(err) {
+			
+		}
+		$('<div>', {
+			class: 'liquid-slider',
+			id: 'slider-id'
+		})
+		.appendTo('body');
+		sourse_array=[];
+      CreateTableFromJson($.parseJSON(lines));
+	  $("#jsonFile").slideUp();
+	  $("#ButtonForFile").html("Выбрать файл");
+    }
+  }
+  
 function CreateTableFromJson(json) {
 	////
 	////$('.liquid-slider').css('height',$('body').height()-35+'px');	
@@ -80,4 +140,19 @@ function CreateTableFromJson(json) {
 			  }
 			 });
 		
+}
+
+function changeCss(className, classValue) {
+    var cssMainContainer = $('#css-modifier-container');
+
+    if (cssMainContainer.length == 0) {
+        var cssMainContainer = $('<style id="css-modifier-container"></style>');
+        cssMainContainer.appendTo($('head'));
+    }
+
+    cssMainContainer.append(className + " {" + classValue + "}\n");
+}
+function getHeightOfBrowser()
+{
+	return $( window ).height() - 115;
 }
