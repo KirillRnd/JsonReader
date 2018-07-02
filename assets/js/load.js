@@ -9,6 +9,9 @@ $(document).ready(function() {
 		initUI(localFile);
 	}
 	function initUI(lines){
+		var high = getHeightOfBrowser();
+		changeCss(".panel-wrapper>div","height: "+high+"px;");
+	
 		try {
 			$("#slider-id-wrapper").remove();
 		}
@@ -85,8 +88,11 @@ $(document).ready(function() {
 		})
 		.appendTo('body');
 		sourse_array=[];
-	  localStorage.removeItem("LocalJson");
-	  localStorage.setItem("LocalJson", lines);
+	  try {
+		localStorage.removeItem("LocalJson");
+		localStorage.setItem("LocalJson", lines);
+	  }
+	  catch(err){}
       CreateTableFromJson($.parseJSON(lines));
 	  $("#jsonFile").slideUp();
 	  $("#ButtonForFile").html("Выбрать файл");
