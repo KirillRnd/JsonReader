@@ -1,3 +1,31 @@
+$(document).ready(function() {
+ /* $( "#target" ).click(function() {
+	//alert( "Handler for .click() called." );
+	$("#inner_tbl").html(buildTable(getJsonVar()));
+	});*/
+	
+	var localFile = localStorage.getItem("LocalJson");
+	if (localFile != null) {
+		initUI(localFile);
+	}
+	function initUI(lines){
+		try {
+			$("#slider-id-wrapper").remove();
+		}
+		catch(err) {
+			
+		}
+		$('<div>', {
+			class: 'liquid-slider',
+			id: 'slider-id'
+		})
+		.appendTo('body');
+		sourse_array=[];
+      CreateTableFromJson($.parseJSON(lines));
+	  $("#jsonFile").slideUp();
+	  $("#ButtonForFile").html("Выбрать файл");
+	}
+});
 
   function ShowFileChoose(){
 	  if ($("#jsonFile").css( "display" ) == "none"){
@@ -14,13 +42,14 @@
 	var high = getHeightOfBrowser();
 	changeCss(".panel-wrapper>div","height: "+high+"px;");
 	
-    var input, file, fr;
+    var input, file, fr, save;
 
     if (typeof window.FileReader !== 'function') {
       alert("The file API isn't supported on this browser yet.");
       return;
     }
 
+	
     input = document.getElementById('fileinput');
     if (!input) {
       alert("Um, couldn't find the fileinput element.");
@@ -36,11 +65,14 @@
       fr = new FileReader();
       fr.onload = receivedText;
       fr.readAsText(file);
+	  
+		  
     }
 
 	
     function receivedText(e) {
       lines = e.target.result;
+	  
 	    try {
 			$("#slider-id-wrapper").remove();
 		}
@@ -53,9 +85,12 @@
 		})
 		.appendTo('body');
 		sourse_array=[];
+	  localStorage.removeItem("LocalJson");
+	  localStorage.setItem("LocalJson", lines);
       CreateTableFromJson($.parseJSON(lines));
 	  $("#jsonFile").slideUp();
 	  $("#ButtonForFile").html("Выбрать файл");
+	  
     }
   }
   
@@ -115,6 +150,7 @@ function CreateTableFromJson(json) {
 			  heightEaseDuration:500,
 			  animateIn:"fadeInUp",
 			  animateOut:"fadeOutUp",
+			  mobileNavigation: true,
 			  callback: function() {
 				var self = this;
 				$('.slider-6-panel').each(function() {

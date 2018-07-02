@@ -4,12 +4,7 @@ var sourse_array=[];
 jQuery(function(a) {
    
 });
-$(document).ready(function() {
- /* $( "#target" ).click(function() {
-	//alert( "Handler for .click() called." );
-	$("#inner_tbl").html(buildTable(getJsonVar()));
-	});*/
-});
+
 
 var g;
 function loadfromURL(a) {
