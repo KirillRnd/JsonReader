@@ -1,3 +1,5 @@
+
+var loadedfrompreviossession=false;
 $(document).ready(function() {
  /* $( "#target" ).click(function() {
 	//alert( "Handler for .click() called." );
@@ -6,6 +8,8 @@ $(document).ready(function() {
 	
 	var localFile = localStorage.getItem("LocalJson");
 	if (localFile != null) {
+		
+		loadedfrompreviossession=true;
 		initUI(localFile);
 	}
 	function initUI(lines){
@@ -29,7 +33,6 @@ $(document).ready(function() {
 	  $("#ButtonForFile").html("Выбрать файл");
 	}
 });
-
   function ShowFileChoose(){
 	  if ($("#jsonFile").css( "display" ) == "none"){
 			$("#jsonFile").slideDown();
@@ -145,7 +148,8 @@ function CreateTableFromJson(json) {
 			});*/
 			sourse_array[sourse_array.length]=elem;
 			
-			if (i == 0) { 
+			var n = (loadedfrompreviossession?(localStorage.getItem("JSR_PageNumber")!=null?localStorage.getItem("JSR_PageNumber"):1):1)-1;//сдвиг отностельно нумерации слайдера
+			if (i == n) { 
 				$("#inner_tbl_"+i).html(buildTable(res));
 			}
 		}
@@ -157,6 +161,7 @@ function CreateTableFromJson(json) {
 			  animateIn:"fadeInUp",
 			  animateOut:"fadeOutUp",
 			  mobileNavigation: true,
+			  firstPanelToLoad:(loadedfrompreviossession?(localStorage.getItem("JSR_PageNumber")!=null?localStorage.getItem("JSR_PageNumber"):1):1),
 			  callback: function() {
 				var self = this;
 				$('.slider-6-panel').each(function() {
@@ -164,7 +169,10 @@ function CreateTableFromJson(json) {
 				});
 			  },
 			  pretransition: function() {
+				
 				var n = this.nextPanel;
+				
+				localStorage.setItem("JSR_PageNumber", n+1);
 				var sourse=sourse_array[n];
 				var res = {};
 				for (var key in sourse) {

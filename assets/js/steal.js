@@ -69,7 +69,7 @@ function buildTable(a) {
         "object" != typeof a[c] || isArray(a[c]) ? "object" == typeof a[c] && isArray(a[c]) ? (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.colSpan = 2,
-        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+$(CreateLinkToArr(c,path.concat(c)), !1).html()+'<table style="width:100%">' + $(buildArray(a[c],path.concat(c)), !1).html() + "</table>") : (d = e.insertRow(-1),
+        b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div>'+(DoesContainArrays(a[c])?(''):($(CreateLinkToArr(c,path.concat(c)), !1).html()))+'<table style="width:100%">' + $(buildArray(a[c],path.concat(c)), !1).html() + "</table>") : (d = e.insertRow(-1),
         b = d.insertCell(-1),
         b.innerHTML = "<div class='td_head'>" + encodeText(c) + "</div>",
         d = d.insertCell(-1),
@@ -78,6 +78,17 @@ function buildTable(a) {
         b.colSpan = 2,
         b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div><table style="width:100%">' + $(buildTable(a[c]), !1).html() + "</table>");
     return e
+	function DoesContainArrays(arr){
+		for (var i in arr)
+		{
+			var counter = 0;
+			for (key in arr[i]) {
+			  if (isArray(arr[i][key])) ++counter;
+			}
+			if (counter > 1) return true;
+		}
+		return false;
+	}
 }
 function buildArray(a,path) {
     var e = document.createElement("table"), d, b, c = !1, p = !1, m = {}, h = -1, n = 0, l;
