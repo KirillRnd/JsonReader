@@ -8,3 +8,10 @@ body{
 #ButtonForFile {
     width: 150px;
    }
+table{
+	width: 100%;
+}
+#json_vl,.td_head,.td_row_even,.td_row_odd {
+    /* font-size: small; */
+	font-size: medium;
+}
