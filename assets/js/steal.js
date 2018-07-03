@@ -78,7 +78,9 @@ function buildTable(a) {
         b.colSpan = 2,
         b.innerHTML = '<div class="td_head">' + encodeText(c) + '</div><table style="width:100%">' + $(buildTable(a[c]), !1).html() + "</table>");
     return e
-	function DoesContainArrays(arr){
+	
+}
+function DoesContainArrays(arr){
 		for (var i in arr)
 		{
 			var counter = 0;
@@ -89,7 +91,6 @@ function buildTable(a) {
 		}
 		return false;
 	}
-}
 function buildArray(a,path) {
     var e = document.createElement("table"), d, b, c = !1, p = !1, m = {}, h = -1, n = 0, l;
     l = "";
@@ -113,7 +114,7 @@ function buildArray(a,path) {
                 h += 1,
                 b = d.insertCell(h),
                 m[l] = h,
-                b.innerHTML = "<div class='td_head'>" + encodeText(k) +  (isArray(a[f][k]) ? $(CreateLinkToArr(k,path), !1).html() : "") + "</div>");//
+                b.innerHTML = "<div class='td_head'>" + encodeText(k) +  (isArray(a[f][k]) ? (DoesContainArrays(a[f][k])?(""):$(CreateLinkToArr(k,path), !1).html()) : "") + "</div>");//
     c || e.deleteRow(0);
     n = h + 1;
     for (f = 0; f < a.length; f++)
