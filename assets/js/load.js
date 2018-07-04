@@ -69,6 +69,7 @@ $(document).ready(function() {
     else {
       file = input.files[0];
       fr = new FileReader();
+	  loadedfrompreviossession=false;
       fr.onload = receivedText;
       fr.readAsText(file);
 	  
