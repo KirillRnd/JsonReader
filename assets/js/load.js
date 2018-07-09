@@ -2,6 +2,10 @@
 var query1 = -1;
 var loadedfrompreviossession=false;
 $(document).ready(function() {
+	
+	$('body').append('<div id="ajaxBusy"><p><img src="assets/images/loading.gif"></p></div>');
+
+	
  /* $( "#target" ).click(function() {
 	//alert( "Handler for .click() called." );
 	$("#inner_tbl").html(buildTable(getJsonVar()));
@@ -24,6 +28,13 @@ $(document).ready(function() {
 	}
 	
 });
+
+$(document).ajaxStart(function(){ //Установка загрузки во время работы аякса
+  $('#ajaxBusy').show(); 
+}).ajaxStop(function(){ 
+  $('#ajaxBusy').hide();
+});
+
   function ShowFileChoose(){
 	  if ($("#jsonFile").css( "display" ) == "none"){
 			$("#jsonFile").slideDown();
