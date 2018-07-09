@@ -13,11 +13,12 @@ $(document).ready(function() {
 	
 	var localFile = localStorage.getItem("LocalJson");
 	if (localFile != null) {
-		
+		$('#ajaxBusy').show();
 		loadedfrompreviossession=true;
 		var high = getHeightOfBrowser();
 		changeCss(".panel-wrapper>div","height: "+high+"px;");
 		PreCreation(localFile);
+		$('#ajaxBusy').hide();
 	} else{
 		var localQuery = localStorage.getItem("QueryId"); 
 		if (localQuery != null) {
