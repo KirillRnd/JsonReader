@@ -74,8 +74,28 @@ $(document).ready(function() {
 
 	
     function receivedText(e) {
-      lines = e.target.result;
+      var lines = e.target.result;
+	  PreCreation(lines);
 	  
+    }
+  }
+function ConnectToServ(){
+	$.ajax({
+			type: "POST",
+			url: "assets/php/getjson.php",
+			data: {query:28}
+	}).done(function( result )
+		{
+			//console.log(result);
+			alert("Success");
+			var lines = "{\"RECORDS\":" + jsonArr + "}";
+			PreCreation(lines);
+		})
+	}
+
+function PreCreation(lines){
+	
+	
 	    try {
 			$("#slider-id-wrapper").remove();
 		}
@@ -96,8 +116,7 @@ $(document).ready(function() {
       CreateTableFromJson($.parseJSON(lines));
 	  $("#jsonFile").slideUp();
 	  $("#ButtonForFile").html("Выбрать файл");
-	  
-    }
+	
   }
   
 function CreateTableFromJson(json) {

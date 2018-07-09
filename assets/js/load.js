@@ -10,28 +10,11 @@ $(document).ready(function() {
 	if (localFile != null) {
 		
 		loadedfrompreviossession=true;
-		initUI(localFile);
-	}
-	function initUI(lines){
 		var high = getHeightOfBrowser();
 		changeCss(".panel-wrapper>div","height: "+high+"px;");
-	
-		try {
-			$("#slider-id-wrapper").remove();
-		}
-		catch(err) {
-			
-		}
-		$('<div>', {
-			class: 'liquid-slider',
-			id: 'slider-id'
-		})
-		.appendTo('body');
-		sourse_array=[];
-      CreateTableFromJson($.parseJSON(lines));
-	  $("#jsonFile").slideUp();
-	  $("#ButtonForFile").html("Выбрать файл");
+		PreCreation(localFile);
 	}
+	
 });
   function ShowFileChoose(){
 	  if ($("#jsonFile").css( "display" ) == "none"){
@@ -77,9 +60,37 @@ $(document).ready(function() {
     }
 
 	
+    
     function receivedText(e) {
-      lines = e.target.result;
+      var lines = e.target.result;
+	  PreCreation(lines);
 	  
+    }
+  }
+function ConnectToServ(){
+	//var query1 = document.getElementById('textLoadServ').value;
+	
+	var high = getHeightOfBrowser();
+	changeCss(".panel-wrapper>div","height: "+high+"px;");
+	var query1 = $('#selectId').val();
+	$.ajax({
+			type: "POST",
+			url: "assets/php/getjson.php",
+			data: {query:query1}
+	}).done(function( result )
+		{
+			//console.log(result);
+			var arr = $.parseJSON(result)
+			var lines = "{\"RECORDS\":" + arr.content + "}";
+			
+			//alert(arr.content);
+			PreCreation(lines);
+		})
+	}
+
+function PreCreation(lines){
+	
+	
 	    try {
 			$("#slider-id-wrapper").remove();
 		}
@@ -96,12 +107,14 @@ $(document).ready(function() {
 		localStorage.removeItem("LocalJson");
 		localStorage.setItem("LocalJson", lines);
 	  }
-	  catch(err){}
+	  catch(err){
+		console.log("Json storage exception");
+		  
+	  }
       CreateTableFromJson($.parseJSON(lines));
 	  $("#jsonFile").slideUp();
 	  $("#ButtonForFile").html("Выбрать файл");
-	  
-    }
+	
   }
   
 function CreateTableFromJson(json) {

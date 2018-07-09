@@ -36,10 +36,16 @@
 	  <fieldset>
 		<h2>Json File</h2>
 		 <input type='file' id='fileinput' accept=".json, .JSON">
-		 
 		 <input type='button' id='btnLoad' value='Load' onclick='loadFile();'>
 	  </fieldset>
-	  
+	  <fieldset>
+		 <input type='button' id='btnLoadServ' value='Connect' onclick='ConnectToServ();'>
+		 <!--<input type='text' id='textLoadServ' value='28'>-->
+		 <select name="select" id="selectId">
+			<option selected value="22">22</option>
+			<option value="28">28</option>
+		 </select>
+	  </fieldset>
 	</form>
 
 
