@@ -14,10 +14,11 @@ $(document).ready(function() {
 	var localFile = localStorage.getItem("LocalJson");
 	if (localFile != null) {
 		$('#ajaxBusy').show();
+		var lines = "{\"RECORDS\":" + JSON.stringify(JSONH.parse(localFile)) + "}";
 		loadedfrompreviossession=true;
 		var high = getHeightOfBrowser();
 		changeCss(".panel-wrapper>div","height: "+high+"px;");
-		PreCreation(localFile);
+		PreCreation(lines);
 		$('#ajaxBusy').hide();
 	} else{
 		var localQuery = localStorage.getItem("QueryId"); 
@@ -132,7 +133,9 @@ function PreCreation(lines){
 		sourse_array=[];
 	  try {
 		localStorage.removeItem("LocalJson");
-		localStorage.setItem("LocalJson", lines);
+		var Local = lines.substring(lines.indexOf("["),lines.length-1);
+		var StrJsonH = JSON.stringify(JSONH.pack(JSON.parse(Local), false));
+		localStorage.setItem("LocalJson", StrJsonH);
 	  }
 	  catch(err){
 		  try {
