@@ -1,4 +1,5 @@
 
+var query1 = -1;
 var loadedfrompreviossession=false;
 $(document).ready(function() {
  /* $( "#target" ).click(function() {
@@ -13,6 +14,13 @@ $(document).ready(function() {
 		var high = getHeightOfBrowser();
 		changeCss(".panel-wrapper>div","height: "+high+"px;");
 		PreCreation(localFile);
+	} else{
+		var localQuery = localStorage.getItem("QueryId"); 
+		if (localQuery != null) {
+			query1 = localQuery;
+			loadedfrompreviossession=true;
+			ConnectToServ();
+		}
 	}
 	
 });
@@ -72,7 +80,7 @@ function ConnectToServ(){
 	
 	var high = getHeightOfBrowser();
 	changeCss(".panel-wrapper>div","height: "+high+"px;");
-	var query1 = $('#selectId').val();
+	if (query1==-1) {query1 = $('#selectId').val();}
 	$.ajax({
 			type: "POST",
 			url: "assets/php/getjson.php",
@@ -91,12 +99,12 @@ function ConnectToServ(){
 function PreCreation(lines){
 	
 	
-	    try {
-			$("#slider-id-wrapper").remove();
-		}
+	try {
+		$("#slider-id-wrapper").remove();
+	}
 		catch(err) {
 			
-		}
+	}
 		$('<div>', {
 			class: 'liquid-slider',
 			id: 'slider-id'
@@ -108,8 +116,14 @@ function PreCreation(lines){
 		localStorage.setItem("LocalJson", lines);
 	  }
 	  catch(err){
-		console.log("Json storage exception");
-		  
+		  try {
+			  
+			localStorage.removeItem("QueryId");
+			localStorage.setItem("QueryId", query1);
+		  }
+		  catch(err){
+			  
+		  }
 	  }
       CreateTableFromJson($.parseJSON(lines));
 	  $("#jsonFile").slideUp();
