@@ -1,21 +1,25 @@
 <?php
-$url='https://xn--e1ambhaffche3i.xn--p1ai/dbconnect.php';
-$postfields = http_build_query(array('query'=>$_POST['query']));
-$url=$url .'?'.$postfields;
+$hash = '$2y$10$.VUnMJerQdTjSDW4rCIbkuEN0ej.b4Bxnbap0yKnTSUb8OXSRwaAG';
+
+$passwd = $_POST['passwd'];
+if (password_verify($passwd, $hash)) {
+    $url='https://xn--e1ambhaffche3i.xn--p1ai/dbconnect.php';
+	$postfields = http_build_query(array('query'=>$_POST['query']));
+	$url=$url .'?'.$postfields;
 
 
-$options = array(
-        CURLOPT_RETURNTRANSFER => true,     // return web page
-        CURLOPT_HEADER         => false,    // don't return headers
-        CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-        CURLOPT_ENCODING       => "",       // handle all encodings
-        CURLOPT_USERAGENT      => "spider", // who am i
-        CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-        CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-        CURLOPT_TIMEOUT        => 120,      // timeout on response
-        CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
-		//CURLOPT_POSTFIELDS     => $postfields,
-		
+	$options = array(
+			CURLOPT_RETURNTRANSFER => true,     // return web page
+			CURLOPT_HEADER         => false,    // don't return headers
+			CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+			CURLOPT_ENCODING       => "",       // handle all encodings
+			CURLOPT_USERAGENT      => "spider", // who am i
+			CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+			CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+			CURLOPT_TIMEOUT        => 120,      // timeout on response
+			CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+			//CURLOPT_POSTFIELDS     => $postfields,
+			
     );
     $ch      = curl_init( $url );
     curl_setopt_array( $ch, $options );
@@ -33,4 +37,8 @@ $options = array(
     // return $header;
 
 	echo  json_encode($header);
+} else {
+    echo '{"errno":"1","errmsg":"Wrong password"}';
+}
+
 ?>

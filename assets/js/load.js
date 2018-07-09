@@ -21,7 +21,7 @@ $(document).ready(function() {
 		$('#ajaxBusy').hide();
 	} else{
 		var localQuery = localStorage.getItem("QueryId"); 
-		if (localQuery != null) {
+		if (localQuery != null && $("#userPassword").val() != "") {
 			query1 = localQuery;
 			loadedfrompreviossession=true;
 			ConnectToServ();
@@ -93,18 +93,25 @@ function ConnectToServ(){
 	var high = getHeightOfBrowser();
 	changeCss(".panel-wrapper>div","height: "+high+"px;");
 	if (query1==-1) {query1 = $('#selectId').val();}
+	var passwd = $("#userPassword").val();
 	$.ajax({
 			type: "POST",
 			url: "assets/php/getjson.php",
-			data: {query:query1}
+			data: {query:query1,passwd:passwd}
 	}).done(function( result )
 		{
 			//console.log(result);
-			var arr = $.parseJSON(result)
-			var lines = "{\"RECORDS\":" + arr.content + "}";
-			
-			//alert(arr.content);
-			PreCreation(lines);
+			var arr = $.parseJSON(result);
+			if (arr.errno == 1) { 
+				$('#ajaxBusy').hide();
+				alert(arr.errmsg);
+			}
+			else{
+				var lines = "{\"RECORDS\":" + arr.content + "}";
+				
+				//alert(arr.content);
+				PreCreation(lines);
+			}
 		})
 	}
 
