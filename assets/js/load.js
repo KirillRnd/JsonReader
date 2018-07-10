@@ -97,7 +97,7 @@ function ConnectToServ(){
 	var passwd = $("#userPassword").val();
 	$.ajax({
 			type: "GET",
-			url: "getjson.php",
+			url: "assets/php/getjson.php",
 			data: {query:query1,passwd:passwd}
 	}).done(function( result )
 		{
