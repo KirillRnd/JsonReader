@@ -96,7 +96,7 @@ function ConnectToServ(){
 	if (query1==-1) {query1 = $('#selectId').val();}
 	var passwd = $("#userPassword").val();
 	$.ajax({
-			type: "POST",
+			type: "GET",
 			url: "assets/php/getjson.php",
 			data: {query:query1,passwd:passwd}
 	}).done(function( result )
