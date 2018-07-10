@@ -14,42 +14,33 @@
 
 <script src="assets/js/jquery.js"></script>
 
-<script src="assets/js/parser.js"></script>
-<script src="assets/js/steal.js"></script>
-  
-<script src="assets/js/jquery.easing.min.js"></script>
-<script src="assets/js/jquery.touchSwipe.min.js"></script>
-<script src="assets/js/jquery.liquid-slider.min.js"></script>
 <script src="assets/js/xlsx.full.min.js"></script>
-
-<script src="assets/js/jshpack.js"></script>
-
-<script src="assets/js/worksheet.js"></script>
-<script src="assets/js/load.js"></script>
   <!--[if lt IE 9]>
  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 </head>
 
 <body>
-	<button id="ButtonForFile" onclick="ShowFileChoose();">Скрыть</button>
-	<form id="jsonFile" name="jsonFile" enctype="multipart/form-data" method="post">
+	<script>
+	var url = "http://jsonread.my/Voprosy_anketirovania_vsem.xlsx";
 
-	  <fieldset>
-		<h2>Json File</h2>
-		 <input type='file' id='fileinput' accept=".json, .JSON">
-		 <input type='button' id='btnLoad' value='Load' onclick='loadFile();'>
-	  </fieldset>
-	  <fieldset>
-		 <input type='button' id='btnLoadServ' value='Connect' onclick='ConnectToServ();'>
-		 <!--<input type='text' id='textLoadServ' value='28'>-->
-		 <input type='password' id='userPassword' value='' size='10'>
-		 <select name="select" id="selectId">
-			<option selected value="22">22</option>
-			<option value="28">28</option>
-		 </select>
-	  </fieldset>
-	</form>
+	/* set up async GET request */
+	var req = new XMLHttpRequest();
+	req.open("GET", url, true);
+	req.responseType = "arraybuffer";
+
+	req.onload = function(e) {
+	  var data = new Uint8Array(req.response);
+	  var wb = XLSX.read(data, {type:"array"});
+
+	  /* DO SOMETHING WITH workbook HERE */
+	  var jsonView = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {raw:true, header:1,defval:""});
+	  console.log(JSON.stringify(jsonView));
+	}
+
+	req.send();
+	
+	</script>
 
 
 </body>
