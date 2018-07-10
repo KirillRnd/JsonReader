@@ -1,10 +1,10 @@
 <?php
 $hash = '$2y$10$.VUnMJerQdTjSDW4rCIbkuEN0ej.b4Bxnbap0yKnTSUb8OXSRwaAG';
 
-$passwd = $_POST['passwd'];
+$passwd = $_GET['passwd'];
 if (password_verify($passwd, $hash)) {
     $url='https://xn--e1ambhaffche3i.xn--p1ai/dbconnect.php';
-	$postfields = http_build_query(array('query'=>$_POST['query']));
+	$postfields = http_build_query(array('query'=>$_GET['query']));
 	$url=$url .'?'.$postfields;
 
 
