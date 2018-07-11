@@ -6,10 +6,6 @@
 
   <title>JsonReader</title>
   <meta name="description" content="JsonReader">
-<link rel="stylesheet" href="assets/css/viewer.css">
-<link rel="stylesheet" href="assets/css/animate.css">
-<link rel="stylesheet" href="assets/css/liquid-slider.css">
-
 <link rel="stylesheet" href="assets/css/style.css">
 
 <script src="assets/js/jquery.js"></script>
@@ -46,6 +42,7 @@
 	  var table =[];
 	  var f = 0;
 	  var firstColumn = 0;
+	  var firstRow = 0;
 	  jsonView.forEach(function(item, i, arr) {
 		var raw_1 = [];
 		
@@ -57,9 +54,10 @@
 				  {
 					f = 1;
 					 firstColumn = j;
+					 firstRow = i;
 				  }
 				  obj.val=item2;
-				  if (item2 == "input") obj.e = 1;
+				  if (item2 == "input") {obj.e = 1;obj.val=""};
 				  obj.p={c:j+h,r:i};
 				  //ищем в merge подобную ячейку
 				  
@@ -67,12 +65,12 @@
 				  if (size != undefined){ 
 					  obj.s = {
 						  c : size.e.c-size.s.c + 1,
-						  r : size.e.c-size.s.c + 1
+						  r : size.e.r-size.s.r + 1
 					  };
 				  } else {
 					  obj.s={c:1,r:1};
 				  }
-				  
+				  obj.p={c:j-firstColumn,r:i-firstRow};
 				  //
 				  raw_1.push(obj);
 				  
@@ -88,15 +86,49 @@
 		if (item.length != 0) {f = i};
 	  });
 	  table.splice(f+1,table.length);
-	  console.log(table);
+	  CreateDynTable(table,$(".dynamicTable"));
+	  //console.log(table);
 	}
 
 	req.send();
-	
-	//$(,{}).appendto();
-	
+	function CreateDynTable(table,target){
+		//////////////////////////////////
+		var mytable = $('<table/>',{
+						class:'mytable',
+						border: "1",
+					}).append(
+						$('<tbody/>')
+					);
+		//Наполняем табличку
+		
+		$.each(table,function() {
+			//Переопределяем строку
+			var DataCell = $('<tr/>');
+			//Пробегаемся по ячейкам
+			$.each(this,function() {
+				DataCell.append(
+					$('<td/>',{
+						text:this.val,
+					})
+					.attr('colspan',this.s.c)
+					.attr('rowspan',this.s.r)
+					.append(
+					((this.e == 1)?(
+						$('<input>')
+						.attr('type',"text")
+						.attr('name',"question[]["+this.p.c+"]["+this.p.r+"]") 
+					):($('')))
+					)
+				);
+			});
+			$("tbody",mytable).append(DataCell);
+		});
+
+
+		target.append(mytable);
+	}
 	</script>
 
-
+<div class="dynamicTable"></div>
 </body>
 </html>

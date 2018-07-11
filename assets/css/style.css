@@ -1,32 +1,3 @@
-.panel-wrapper>div{
-	overflow-y: scroll;
-    height: 600px;
-}
-body{
-	overflow: hidden;
-}
-#ButtonForFile {
-    width: 150px;
-   }
-table{
-	width: 100%;
-}
-#json_vl,.td_head,.td_row_even,.td_row_odd {
-    /* font-size: small; */
-	font-size: medium;
-}
-#ajaxBusy{
-	margin: 0 auto;
-	/* padding: 0px; */
-	position: fixed;
-	/* right: 3px; */
-	/* top: 3px; */
-	width: 100%;
-	z-index: 10;
-	display:none;
-}
-#ajaxBusy img {
-	margin-left: auto;
-    margin-right: auto;
-    display: block;
+.mytable{
+	border-spacing:0;
 }
