@@ -4,7 +4,7 @@ var loadedfrompreviossession=false;
 $(document).ready(function() {
 	
 	$('body').append('<div id="ajaxBusy"><p><img src="assets/images/loading.gif"></p></div>');
-
+	GetQueryId();
 	
  /* $( "#target" ).click(function() {
 	//alert( "Handler for .click() called." );
