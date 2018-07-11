@@ -22,6 +22,10 @@
 
 <body>
 	<script>
+	function isStart(element) {
+	  return ((element.s.c == this.c)&&(element.s.r == this.r));  
+	}
+	
 	var url = "http://jsonread.my/Voprosy_anketirovania_vsem.xlsx";
 
 	/* set up async GET request */
@@ -32,13 +36,64 @@
 	req.onload = function(e) {
 	  var data = new Uint8Array(req.response);
 	  var wb = XLSX.read(data, {type:"array"});
+	  var shift = wb.Sheets[wb.SheetNames[0]]["!ref"];
+	  var h = shift[0].charCodeAt(0) - 65;
+	  console.log(wb['!merges']);
 
 	  /* DO SOMETHING WITH workbook HERE */
 	  var jsonView = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {raw:true, header:1,defval:""});
-	  console.log(JSON.stringify(jsonView));
+	  var merge = wb.Sheets[wb.SheetNames[0]]['!merges'];
+	  var table =[];
+	  var f = 0;
+	  var firstColumn = 0;
+	  jsonView.forEach(function(item, i, arr) {
+		var raw_1 = [];
+		
+		  item.forEach(function(item2, j, arr2) {
+		  
+			  if (item2 != "") {
+				  var obj={};
+				  if (f == 0)
+				  {
+					f = 1;
+					 firstColumn = j;
+				  }
+				  obj.val=item2;
+				  if (item2 == "input") obj.e = 1;
+				  obj.p={c:j+h,r:i};
+				  //ищем в merge подобную ячейку
+				  
+				  var size = merge.find(isStart,obj.p);
+				  if (size != undefined){ 
+					  obj.s = {
+						  c : size.e.c-size.s.c + 1,
+						  r : size.e.c-size.s.c + 1
+					  };
+				  } else {
+					  obj.s={c:1,r:1};
+				  }
+				  
+				  //
+				  raw_1.push(obj);
+				  
+			  }	
+		  });
+		 if (f != 0){
+		 table.push(raw_1);
+		}		 
+	  });
+	  //закончена первоначальная обработка table
+	  f = 0;
+	  table.forEach(function(item, i, arr) {
+		if (item.length != 0) {f = i};
+	  });
+	  table.splice(f+1,table.length);
+	  console.log(table);
 	}
 
 	req.send();
+	
+	//$(,{}).appendto();
 	
 	</script>
 
