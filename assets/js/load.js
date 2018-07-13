@@ -102,6 +102,7 @@ function ConnectToServ(){
 	}).done(function( result )
 		{
 			//console.log(result);
+			query1 = -1;
 			var arr = $.parseJSON(result);
 			if (arr.errno == 1) { 
 				$('#ajaxBusy').hide();
@@ -113,6 +114,7 @@ function ConnectToServ(){
 				//alert(arr.content);
 				PreCreation(lines);
 			}
+			
 		})
 	}
 
